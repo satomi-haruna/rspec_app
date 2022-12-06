@@ -35,7 +35,7 @@ describe "一覧画面のテスト" do
           expect(page).to have_content book.title
           expect(page).to have_content book.body
           # Showリンク
-          show_link = find_all('a')[j] # find_all：指定した値（タグ）をページ中からすべて検索
+          show_link = find_all('a')[j] # find_all：指定した値（タグ）をページ中からすべて検索、j番目のaタグ
           expect(show_link.native.inner_text).to match(/show/i)
           expect(show_link[:href]).to eq book_path(book)
           # Editリンク
@@ -54,8 +54,8 @@ describe "一覧画面のテスト" do
   end
   context '投稿処理に関するテスト' do
     it '投稿に成功しサクセスメッセージが表示されるか' do
-      fill_in 'book[title]', with: Faker::Lorem.characters(number:5)
-      fill_in 'book[body]', with: Faker::Lorem.characters(number:20)
+      fill_in 'book[title]', with: Faker::Lorem.characters(number:5) #フォームにテキストを入力
+      fill_in 'book[body]', with: Faker::Lorem.characters(number:20) #Faker テスト用のダミーデータを作成してくれる
       click_button 'Create Book'
       expect(page).to have_content 'successfully'
     end
@@ -73,7 +73,7 @@ describe "一覧画面のテスト" do
   end
   context 'book削除のテスト' do
     it 'bookの削除' do
-      expect{ book.destroy }.to change{ Book.count }.by(-1)
+      expect{ book.destroy }.to change{ Book.count }.by(-1) #削除している by(-1)：一つ減っているか判定
       # ※本来はダイアログのテストまで行うがココではデータが削除されることだけをテスト
     end
   end
